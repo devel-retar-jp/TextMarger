@@ -157,7 +157,7 @@ namespace TextManager
                 }
             }
             List<string> clistbef = new List<string>(mergeList);
-            mergeList = (from x in mergeList select x).Distinct().ToList();
+            mergeList = (from x in mergeList select x).Distinct().OrderBy(x => x).ToList(); //Bug Fix 2019/11/11
             using (StreamWriter writer = new StreamWriter(mergeFile, false, Encoding.Unicode))
             {
                 foreach (var item in mergeList)
@@ -177,6 +177,7 @@ namespace TextManager
                     commonList.Add(item);
                 }
             }
+            commonList = commonList.Distinct().OrderBy(x => x).ToList();    //Bug Fix 2019/11/11
             using (StreamWriter writer = new StreamWriter(commonFile, false, Encoding.Unicode))
             {
                 foreach (var item in commonList)
@@ -204,7 +205,9 @@ namespace TextManager
                 {
                     orgl.Remove(item);
                 }
-                orgl = orgl.Distinct().ToList();    //Bug Fix 2019/11/11
+                orgl = orgl.Distinct().OrderBy(x => x).ToList();    //Bug Fix 2019/11/11
+                //orgl = orgl.OrderBy(x => x).ToList();
+
                 using (StreamWriter writer = new StreamWriter(f.Value, false, Encoding.Unicode))
                 {
                     foreach (var item in orgl)
