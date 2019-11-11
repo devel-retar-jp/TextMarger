@@ -204,6 +204,7 @@ namespace TextManager
                 {
                     orgl.Remove(item);
                 }
+                orgl = orgl.Distinct().ToList();    //Bug Fix 2019/11/11
                 using (StreamWriter writer = new StreamWriter(f.Value, false, Encoding.Unicode))
                 {
                     foreach (var item in orgl)
