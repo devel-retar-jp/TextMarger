@@ -150,10 +150,13 @@ namespace TextManager
             {
                 using (StreamReader reader = new StreamReader(f, Encoding.Unicode))
                 {
+                    List<string> mlb = new List<string>();
                     while (reader.EndOfStream == false)
                     {
-                        mergeList.Add(reader.ReadLine());
+                        mlb.Add(reader.ReadLine());
+                        //mergeList.Add(reader.ReadLine());
                     }
+                    mergeList.AddRange(mlb.Distinct().OrderBy(x => x).ToList());    //Bug Fix 2019/11/11
                 }
             }
             List<string> clistbef = new List<string>(mergeList);
@@ -167,7 +170,7 @@ namespace TextManager
             }
 
             /// <summary>
-            ///COMMON
+            ///COMMON And ORG
             /// </summary>
             foreach (var item in mergeList)
             {
@@ -200,13 +203,12 @@ namespace TextManager
                     {
                         orgl.Add(reader.ReadLine());
                     }
+                    orgl = orgl.Distinct().OrderBy(x => x).ToList();    //Bug Fix 2019/11/11
                 }
                 foreach (var item in cl)
                 {
                     orgl.Remove(item);
                 }
-                orgl = orgl.Distinct().OrderBy(x => x).ToList();    //Bug Fix 2019/11/11
-                //orgl = orgl.OrderBy(x => x).ToList();
 
                 using (StreamWriter writer = new StreamWriter(f.Value, false, Encoding.Unicode))
                 {
